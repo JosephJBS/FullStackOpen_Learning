@@ -16,6 +16,10 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
 
+  const [mostVoted, setMostVoted] = useState(0);
+
+  const [indexMostVoted, setIndexMostVoted] = useState(0);
+
   const clickNextAnecdote = () => {
     const min = 0;
     const max = anecdotes.length;
@@ -27,20 +31,45 @@ const App = () => {
     const newPoints = [...points];
     newPoints[selected] += 1;
     setPoints(newPoints);
+
+    const maxValue = Math.max(...newPoints);
+
+    setMostVoted(maxValue);
+    setIndexMostVoted(newPoints.findIndex((x) => x == maxValue));
   };
 
   return (
     <div>
-      {anecdotes[selected]}
-      <p>has {points[selected]} votes</p>
+      <Anecdote
+        title="Anecdote of the day"
+        anecdote={anecdotes[selected]}
+        votes={points[selected]}
+      />
+
       <Button text="vote" handleClick={clickVoteAnecdote} />
       <Button text="next anecdote" handleClick={clickNextAnecdote} />
+
+      <Anecdote
+        title="Anecdote with most votes"
+        anecdote={anecdotes[indexMostVoted]}
+        votes={mostVoted}
+      />
     </div>
   );
 };
 
 const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
+};
+
+const Anecdote = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <p>{props.anecdote}</p>
+      <p>has {props.votes} votes</p>
+    </div>
+  );
 };
 
 export default App;
