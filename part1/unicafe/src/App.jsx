@@ -38,7 +38,7 @@ const Button = (props) => (
 const Statistics = (props) => {
   let all = props.good + props.neutral + props.bad;
   let average = (props.good * 1 + props.neutral * 0 + props.bad * -1) / all;
-  let positive = (props.good / all) * 100;
+  let positive = (props.good / all) * 100 + " % ";
 
   if (all == 0) {
     return (
@@ -52,15 +52,25 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-
-      <p>all {all}</p>
-      <p>average {average} </p>
-      <p>positive {positive} % </p>
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={all} />
+          <StatisticLine text="average" value={average} />
+          <StatisticLine text="positive" value={positive} />
+        </tbody>
+      </table>
     </div>
   );
 };
+
+const StatisticLine = (props) => (
+  <tr>
+    <td>{props.text}</td>
+    <td>{props.value}</td>
+  </tr>
+);
 
 export default App;
