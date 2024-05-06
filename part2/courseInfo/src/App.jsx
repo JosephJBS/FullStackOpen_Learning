@@ -11,18 +11,9 @@ const Content = (props) => {
 
   return (
     <div>
-      <Part
-        part={props.parts[0].name}
-        exercises={props.parts[0].exercises}
-      ></Part>
-      <Part
-        part={props.parts[1].name}
-        exercises={props.parts[1].exercises}
-      ></Part>
-      <Part
-        part={props.parts[2].name}
-        exercises={props.parts[2].exercises}
-      ></Part>
+      {props.parts.map((part) => (
+        <Part part={part.name} exercises={part.exercises} key={part.id}/>
+      ))}
     </div>
   );
 };
@@ -31,7 +22,7 @@ const Part = (props) => {
   console.log(props);
   return (
     <div>
-      <p>
+      <p key={props.id}>
         {props.part} {props.exercises}
       </p>
     </div>
@@ -39,15 +30,15 @@ const Part = (props) => {
 };
 
 const Total = (props) => {
+  const sum = props.total.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.exercises,
+    0
+  );
+  console.log(sum);
   return (
     <div>
       <p>
-        <b>total of{" "}
-        {props.total[0].exercises +
-          props.total[1].exercises +
-          props.total[2].exercises}{" "}
-        exercises
-        </b>
+        <b>total of {sum} exercises</b>
       </p>
     </div>
   );
