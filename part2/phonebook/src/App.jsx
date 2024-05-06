@@ -10,15 +10,18 @@ const App = () => {
       name: newName,
     };
 
-    setPersons(persons.concat(phoneObject));
-    setNewName("");
+    if (persons.find((person) => person.name === newName)) {
+      alert( newName +" is already added to phonebook");
+    } else {
+      setPersons(persons.concat(phoneObject));
+      setNewName("");
+    }
   };
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value)
-    setNewName(event.target.value)
-  }
-
+    console.log(event.target.value);
+    setNewName(event.target.value);
+  };
 
   return (
     <div>
@@ -33,9 +36,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map(person =>
+        {persons.map((person) => (
           <li key={person.name}> {person.name} </li>
-        )}
+        ))}
       </ul>
       <div>debug: {newName}</div>
     </div>
