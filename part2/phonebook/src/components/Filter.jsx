@@ -1,9 +1,4 @@
-const Filter = ({persons, searchName, setSearchName}) => {
-  const handleSearchNameChange = (event) => {
-    console.log(event.target.value);
-    setSearchName(event.target.value);
-  };
-
+const Filter = ({persons, searchName, handleSearchNameChange}) => {
   return (
     <div>
       <p>Filter show with</p>{" "}

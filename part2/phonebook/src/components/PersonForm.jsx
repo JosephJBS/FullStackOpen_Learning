@@ -1,30 +1,4 @@
-const PersonForm = ({persons, newName, newNumber, setNewName, setPersons,setNewNumber}) => {
-  const addPhoneNumber = (event) => {
-    event.preventDefault();
-    const phoneObject = {
-      name: newName,
-      number: newNumber,
-    };
-
-    if (persons.find((person) => person.name === newName)) {
-      alert(newName + " is already added to phonebook");
-    } else {
-      setPersons(persons.concat(phoneObject));
-      setNewName("");
-      setNewNumber("");
-    }
-  };
-
-  const handleNameChange = (event) => {
-    console.log(event.target.value);
-    setNewName(event.target.value);
-  };
-
-  const handleNumberChange = (event) => {
-    console.log(event.target.value);
-    setNewNumber(event.target.value);
-  };
-
+const PersonForm = ({newName, newNumber, addPhoneNumber, handleNameChange, handleNumberChange}) => {
   return (
     <form onSubmit={addPhoneNumber}>
       <div>
