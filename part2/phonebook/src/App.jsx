@@ -22,25 +22,21 @@ const App = () => {
     if (persons.find((person) => person.name === newName)) {
       alert(newName + " is already added to phonebook");
     } else {
-      personService
-      .create(phoneObject)
-      .then(response => {
-        console.log(response)
+      personService.create(phoneObject).then((response) => {
+        console.log(response);
         setPersons(persons.concat(response));
         setNewName("");
         setNewNumber("");
-      })
+      });
     }
   };
 
   useEffect(() => {
-    personService
-    .getAll()
-    .then((initialPhonebook) => {
-      console.log(initialPhonebook)
-      setPersons(initialPhonebook)
-    }) 
-  }, [])
+    personService.getAll().then((initialPhonebook) => {
+      console.log(initialPhonebook);
+      setPersons(initialPhonebook);
+    });
+  }, []);
 
   const handleNameChange = (event) => {
     console.log(event.target.value);
@@ -57,6 +53,21 @@ const App = () => {
     setSearchName(event.target.value);
   };
 
+  const deletePerson = (id, name) => {
+    return () => {
+      if(window.confirm(`Delete ${name} ?`)){
+        personService
+        .deletePerson(id)
+        .then((response) => {
+          console.log('DELETE success:', response);
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch((error) => {
+          console.error("Error deleting person:", error);
+        });
+      }
+    };
+  };
 
   return (
     <div>
@@ -75,10 +86,9 @@ const App = () => {
         addPhoneNumber={addPhoneNumber}
         handleNameChange={handleNameChange}
         handleNumberChange={handleNumberChange}
-
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={persons} deletePerson={deletePerson} />
     </div>
   );
 };
