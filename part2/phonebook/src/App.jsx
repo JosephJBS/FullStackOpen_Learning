@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
+import Notification from "./components/Notification";
 
 import personService from "./services/persons";
 
@@ -11,6 +12,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState('wating for operations ...')
 
   const addPhoneNumber = (event) => {
     event.preventDefault();
@@ -23,11 +25,19 @@ const App = () => {
       console.log("si existe")
       if(window.confirm(`${newName} is alredy added to phonebook, replace the old number with a new one ?`)){
         const personFind = persons.find((person) => person.name === newName);
+        setNotificationMessage(`Update number of ${personFind.name}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
         updateNumber(personFind.id);
       }
     } else {
       personService.create(phoneObject).then((response) => {
         console.log(response);
+        setNotificationMessage(`Added ${response.name}`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
         setPersons(persons.concat(response));
         setNewName("");
         setNewNumber("");
@@ -95,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} />
       <Filter
         persons={persons}
         searchName={searchName}
