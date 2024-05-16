@@ -1,5 +1,15 @@
+import Wheather from "../components/Weather";
+
 const Country = ({ country }) => {
-  const languages = country.languages;
+  const languages =
+    country.languages && Object.keys(country.languages).length > 0
+      ? country.languages
+      : {};
+  const capital =
+    country.capital && country.capital.length > 0
+      ? country.capital[0]
+      : "no capital";
+
   return (
     <div>
       {
@@ -8,7 +18,7 @@ const Country = ({ country }) => {
           <br />
           <p>capital: {country.capital} </p>
           <p>area: {country.area} </p>
-          <h3>languages</h3>
+          <h3>Languages</h3>
           <ul>
             {Object.entries(languages).map(([code, language]) => (
               <li key={code}>
@@ -19,6 +29,8 @@ const Country = ({ country }) => {
         </div>
       }
       <img src={country.flags.png} alt="" />
+
+      <Wheather capital={capital}></Wheather>
     </div>
   );
 };

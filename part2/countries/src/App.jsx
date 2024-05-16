@@ -24,7 +24,6 @@ function App() {
 
   useEffect(() => {
     console.log("countriesShow actualizados: ", showCountries);
-    
   }, [showCountries]);
 
   const searchCountryFun = (text) => {
@@ -42,7 +41,6 @@ function App() {
   };
 
   const showButtonOnclick = (countryName) => {
-    console.log("uwu");
     countryService.getCountryByName(countryName).then((country) => {
       setShowCountries([country]);
       console.log(country);
