@@ -6,36 +6,34 @@ import CountryInfo from "./components/CountryInfo";
 function App() {
   const [countries, setCountries] = useState([]);
   const [countriesFound, setCountriesFound] = useState([]);
-
   const [countrySearch, setCountrySearch] = useState("");
   const [showCountries, setShowCountries] = useState([]);
 
   useEffect(() => {
     countryService.getAll().then((countries) => {
-      console.log("respuesta apps: ", countries);
       setCountries(countries);
     });
   }, []);
 
   useEffect(() => {
-    console.log("countriesFound actualizados: ", countriesFound);
+    console.log("countriesFound updated: ", countriesFound);
     setShowCountries(countriesFound);
   }, [countriesFound]);
 
   useEffect(() => {
-    console.log("countriesShow actualizados: ", showCountries);
+    console.log("countriesShow updated: ", showCountries);
   }, [showCountries]);
 
   const searchCountryFun = (text) => {
-    const paisesCoincidentes = countries.filter((country) => {
-      const nombreComun = country.name.common.toLowerCase();
-      return nombreComun.startsWith(text.toLowerCase());
+    const matchCoincidentes = countries.filter((country) => {
+      const commonName = country.name.common.toLowerCase();
+      return commonName.startsWith(text.toLowerCase());
     });
-    setCountriesFound(paisesCoincidentes);
+    setCountriesFound(matchCoincidentes);
   };
 
   const handleNoteChange = (event) => {
-    console.log("buscar: ", event.target.value);
+    console.log(event.target.value);
     setCountrySearch(event.target.value);
     searchCountryFun(event.target.value);
   };

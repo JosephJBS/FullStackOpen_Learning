@@ -4,14 +4,11 @@ import wheatherService from "../services/wheather";
 const Weather = ({ capital }) => {
   const [weather, setWeather] = useState({});
 
-  console.log("Ingresa a weather");
-  console.log("Tipo de varible: ", capital);
-
   useEffect(() => {
     wheatherService
       .getWheatherByCapital(capital)
       .then((infoWeather) => setWeather(infoWeather))
-      .catch((error) => console.error("Error fetching weather data:", error));
+      .catch((error) => console.error("Error weather data:", error));
   }, [capital]);
 
   return (
