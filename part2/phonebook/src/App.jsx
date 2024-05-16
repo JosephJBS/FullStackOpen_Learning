@@ -101,7 +101,7 @@ const App = () => {
           persons.map((person) => (person.id != id ? person : returnedPerson))
         );
       })
-      .catch((error) => {
+      .catch((error) => { // eslint-disable-line no-unused-vars
         setNotificationMessage(
           `Information od ${person.name} has already removed from server`
         );
